@@ -279,8 +279,11 @@ public static class ConfigurarNivel
 
     static void AgregarEscenaAlBuild()
     {
+        // Si ya está en el Build no se toca el orden (el menú principal debe seguir primero)
+        if (EditorBuildSettings.scenes.Any(s => s.path == RutaEscena))
+            return;
         var lista = new List<EditorBuildSettingsScene> { new EditorBuildSettingsScene(RutaEscena, true) };
-        lista.AddRange(EditorBuildSettings.scenes.Where(s => s.path != RutaEscena));
+        lista.AddRange(EditorBuildSettings.scenes);
         EditorBuildSettings.scenes = lista.ToArray();
     }
 }
